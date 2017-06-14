@@ -150,10 +150,13 @@ export class TodoStore {
      */
     loadTodos() {
         this.isLoading = true;
-        this.transportLayer.fetchTodos().then(fetchedTodos => {
-            fetchedTodos.forEach(json => this.updateTodoFromServer(json));
-            this.isLoading = false;
-        });
+        this.transportLayer.fetchTodos()
+	    .then(fetchedTodos => {
+                fetchedTodos.forEach(json => this.updateTodoFromServer(json));
+            })
+	    .finally(() => {
+	        this.isLoading = false;
+	    })
     }
 
     /**
